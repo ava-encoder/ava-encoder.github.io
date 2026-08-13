@@ -182,12 +182,27 @@ figcaption strong, .table-caption strong { color: var(--ink); }
 .requirement-row div:last-child { border: 0; }
 .requirement-row b { display: block; color: white; font-size: 11px; }
 .requirement-row span { color: #cfd2ff; font-size: 8px; }
-.core-answer { display: grid; grid-template-columns: 1fr 1.1fr; gap: 24px; margin-top: 22px; padding: 18px 20px; border-left: 3px solid var(--violet); background: var(--paper); }
+.core-answer { display: grid; grid-template-columns: .78fr 1.45fr; gap: 22px; margin-top: 22px; padding: 18px 20px; border-left: 3px solid var(--violet); background: var(--paper); }
 .core-answer h3 { margin: 7px 0 5px; color: var(--ink); font-family: Newsreader, serif; font-size: 21px; line-height: 1.1; }
 .core-answer p:last-child { margin: 0; color: var(--muted); font-size: 10px; }
-.core-flow { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
-.core-flow span { padding: 7px 9px; border: 1px solid var(--rule); color: var(--ink); background: var(--soft); font: 500 9px DM Mono, monospace; }
-.core-flow b { color: var(--coral); font-weight: 500; }
+.core-flow { min-width: 0; display: grid; align-items: center; }
+.core-flow svg { display: block; width: 100%; height: auto; overflow: visible; }
+.flow-node rect { fill: var(--soft); stroke: #aeb0c2; stroke-width: 1.4; }
+.flow-encoder rect { fill: var(--violet-light); stroke: var(--violet); }
+.flow-kg rect { fill: #e8f4f2; stroke: var(--mint); }
+.flow-node text, .feedback-node text { fill: var(--ink); font: 500 11px Inter, Arial, sans-serif; text-anchor: middle; }
+.flow-forward, .feedback-source, .feedback-outer, .feedback-inner { fill: none; stroke-width: 2; }
+.flow-forward, .feedback-source { stroke: #6f7286; }
+.feedback-outer { stroke: var(--coral); }
+.feedback-inner { stroke: var(--mint); }
+#arrow-forward path { fill: #6f7286; }
+#arrow-outer path { fill: var(--coral); }
+#arrow-inner path { fill: var(--mint); }
+.feedback-node rect { fill: #fff4ed; stroke: var(--coral); stroke-width: 1.4; }
+.flow-caption { fill: var(--muted); font: 500 9px DM Mono, monospace; text-anchor: middle; text-transform: uppercase; letter-spacing: .06em; }
+.outer-label, .inner-label { font: 600 8px Inter, Arial, sans-serif; text-anchor: middle; paint-order: stroke; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round; }
+.outer-label { fill: var(--coral); }
+.inner-label { fill: var(--mint); }
 
 #abstract { position: relative; }
 #abstract::after {

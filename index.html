@@ -108,10 +108,56 @@
         <div>
           <p class="mini-label">Our answer</p>
           <h3>Learn the representation through reconstruction.</h3>
-          <p>AVA-Encoder converts a film into a text-centered Film KG, reconstructs the film using fixed generators, and uses reconstruction errors to improve what the representation preserves.</p>
+          <p>AVA-Encoder encodes a film into a text-centered Film KG and reconstructs it with a fixed decoder. Reconstruction differences become textual feedback: the Outer Loop improves the Agentic Video Encoder, while the Inner Loop refines the Film KG.</p>
         </div>
-        <div class="core-flow" aria-label="AVA-Encoder conceptual flow">
-          <span>Film \(V\)</span><b>→</b><span>Film KG \(G\)</span><b>→</b><span>Reconstruction \(\hat V\)</span><b>→</b><span>Textual feedback</span>
+        <div class="core-flow" aria-label="AVA-Encoder forward auto-encoding path and reconstruction-feedback loops">
+          <svg viewBox="0 0 680 245" role="img" aria-labelledby="core-flow-title core-flow-desc">
+            <title id="core-flow-title">AVA-Encoder self-evolving auto-encoding loop</title>
+            <desc id="core-flow-desc">A film passes through the Agentic Video Encoder to a Film Knowledge Graph and through a fixed decoder to a reconstruction. Reconstruction-derived textual feedback returns to both the Agentic Video Encoder through the Outer Loop and the Film Knowledge Graph through the Inner Loop.</desc>
+            <defs>
+              <marker id="arrow-forward" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z"></path></marker>
+              <marker id="arrow-outer" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z"></path></marker>
+              <marker id="arrow-inner" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z"></path></marker>
+            </defs>
+
+            <g class="flow-node">
+              <rect x="8" y="43" width="72" height="48" rx="4"></rect>
+              <text x="44" y="64">Film</text><text x="44" y="80">V</text>
+            </g>
+            <g class="flow-node flow-encoder">
+              <rect x="110" y="35" width="144" height="64" rx="4"></rect>
+              <text x="182" y="61">Agentic Video</text><text x="182" y="79">Encoder E</text>
+            </g>
+            <g class="flow-node flow-kg">
+              <rect x="285" y="43" width="91" height="48" rx="4"></rect>
+              <text x="330.5" y="64">Film KG</text><text x="330.5" y="80">G</text>
+            </g>
+            <g class="flow-node">
+              <rect x="407" y="35" width="110" height="64" rx="4"></rect>
+              <text x="462" y="61">Fixed</text><text x="462" y="79">Decoder</text>
+            </g>
+            <g class="flow-node">
+              <rect x="548" y="43" width="124" height="48" rx="4"></rect>
+              <text x="610" y="64">Reconstruction</text><text x="610" y="80">V̂</text>
+            </g>
+
+            <path class="flow-forward" d="M80 67 H108" marker-end="url(#arrow-forward)"></path>
+            <path class="flow-forward" d="M254 67 H283" marker-end="url(#arrow-forward)"></path>
+            <path class="flow-forward" d="M376 67 H405" marker-end="url(#arrow-forward)"></path>
+            <path class="flow-forward" d="M517 67 H546" marker-end="url(#arrow-forward)"></path>
+            <text class="flow-caption" x="340" y="19">Forward auto-encoding</text>
+
+            <g class="feedback-node">
+              <rect x="379" y="168" width="231" height="52" rx="4"></rect>
+              <text x="494.5" y="190">Reconstruction-derived</text>
+              <text x="494.5" y="207">textual feedback</text>
+            </g>
+            <path class="feedback-source" d="M610 91 V139 Q610 151 598 151 H506 Q494 151 494 166" marker-end="url(#arrow-forward)"></path>
+            <path class="feedback-outer" d="M421 168 C366 128 234 139 182 101" marker-end="url(#arrow-outer)"></path>
+            <path class="feedback-inner" d="M470 168 C436 132 359 137 331 93" marker-end="url(#arrow-inner)"></path>
+            <text class="outer-label" x="250" y="145">Outer Loop · policy feedback</text>
+            <text class="inner-label" x="386" y="126">Inner Loop · representation feedback</text>
+          </svg>
         </div>
       </div>
     </section>
