@@ -261,7 +261,7 @@ figcaption strong, .table-caption strong { color: var(--ink); }
 .loop-figures figure { padding: 13px; border: 1px solid var(--rule); background: var(--paper); }
 .loop-figures figure:first-child { border-top: 4px solid var(--coral); }
 .loop-figures figure:last-child { border-top: 4px solid var(--mint); }
-.loop-figures h3 { min-height: 46px; margin: 7px 0 12px; color: var(--ink); font-family: Newsreader, serif; font-size: 21px; line-height: 1.08; }
+.loop-figures h3 { margin: 7px 0 1px; color: var(--ink); font-family: Newsreader, serif; font-size: 25px; line-height: 1.08; }
 .loop-figures img { width: 100%; height: 620px; object-fit: contain; object-position: top center; }
 .loop-figures figcaption { padding-bottom: 0; }
 .figure-note { width: min(100%, var(--paper-width)); margin: 17px auto 0; padding: 11px 14px; border-left: 3px solid var(--violet); background: var(--violet-light); }
@@ -269,8 +269,9 @@ figcaption strong, .table-caption strong { color: var(--ink); }
 .loop-objectives article { min-width: 0; padding: 16px; border: 1px solid var(--rule); background: var(--paper); }
 .loop-objectives article:first-child { border-top: 3px solid var(--coral); }
 .loop-objectives article:last-child { border-top: 3px solid var(--mint); }
-.loop-objectives h3 { margin: 7px 0 8px; color: var(--ink); font-family: Newsreader, serif; font-size: 21px; line-height: 1.1; }
+.loop-objectives h3 { margin: 7px 0 1px; color: var(--ink); font-family: Newsreader, serif; font-size: 25px; line-height: 1.1; }
 .loop-objectives article > p:last-child { margin: 6px 0 0; color: var(--muted); font-size: 10px; }
+.loop-subtitle { min-height: 22px; margin: 0 0 7px; color: var(--violet); font-size: 10px; font-weight: 600; }
 .objective-summary { min-height: 37px; margin: 0; color: #5b5d70; font-size: 9px; }
 .compact-equation { min-height: 78px; display: grid; align-items: center; overflow-x: auto; font-size: 10.5px; }
 

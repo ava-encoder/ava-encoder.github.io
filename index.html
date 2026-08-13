@@ -222,8 +222,9 @@
 
       <div class="loop-objectives">
         <article>
-          <p class="mini-label">Outer Loop · Stage 1</p>
-          <h3>Data-Independent Encoding Policy Pseudo-Training</h3>
+          <p class="mini-label">Stage 1 · before deployment</p>
+          <h3>Outer Loop</h3>
+          <p class="loop-subtitle">Data-Independent Encoding Policy Pseudo-Training</p>
           <p class="objective-summary"><b>When:</b> before deployment &nbsp;·&nbsp; <b>Updates:</b> shared \(P_{\mathrm{shot}}\) &nbsp;·&nbsp; <b>Freezes:</b> \(P_{\mathrm{film}}\), \(P_{\mathrm{kf}}\), and all model weights</p>
           <div class="compact-equation">\[
             P_{\mathrm{shot}}^*=\arg\max_{p\in\mathcal P_{\mathrm{shot}}}
@@ -232,8 +233,9 @@
           <p>The Outer Loop learns one reusable shot-level encoding policy from a stream of \(L\) videos---six in the reported pseudo-training setup. The resulting policy is shared by later, unseen video inputs.</p>
         </article>
         <article>
-          <p class="mini-label">Inner Loop · Stage 2</p>
-          <h3>Data-Dependent KG Representation Refinement</h3>
+          <p class="mini-label">Stage 2 · optional at test time</p>
+          <h3>Inner Loop</h3>
+          <p class="loop-subtitle">Data-Dependent KG Representation Refinement</p>
           <p class="objective-summary"><b>When:</b> optional at test time &nbsp;·&nbsp; <b>Updates:</b> current video's \(G\) &nbsp;·&nbsp; <b>Freezes:</b> complete policy \(P^*\) and all model weights</p>
           <div class="compact-equation">\[
             G_{V,\beta}^*=\arg\max_{G\in\mathcal G_{\mathrm{reach}}(V;P^*)}
@@ -246,13 +248,15 @@
       <div class="loop-figures">
         <figure>
           <p class="mini-label">Stage 1 · before deployment</p>
-          <h3>Data-Independent Encoding Policy Pseudo-Training</h3>
+          <h3>Outer Loop</h3>
+          <p class="loop-subtitle">Data-Independent Encoding Policy Pseudo-Training</p>
           <img src="assets/outer_loop.png" alt="Outer-loop policy pseudo-training with reconstruction feedback and an anti-forgetting gate.">
           <figcaption><strong>Outer loop.</strong> Reconstruction feedback proposes a challenger \(P'\); current-video and historical replay checks determine whether it replaces the incumbent \(P_{\mathrm{shot}}\).</figcaption>
         </figure>
         <figure>
           <p class="mini-label">Stage 2 · optional at test time</p>
-          <h3>Data-Dependent KG Representation Refinement</h3>
+          <h3>Inner Loop</h3>
+          <p class="loop-subtitle">Data-Dependent KG Representation Refinement</p>
           <img src="assets/inner_loop.png" alt="Inner-loop KG representation refinement with reconstruction feedback and an anti-degradation gate.">
           <figcaption><strong>Inner loop.</strong> Asset-level textual feedback proposes \(G'\); the Anti-Degradation Gate accepts only a verified improvement for the current input.</figcaption>
         </figure>
