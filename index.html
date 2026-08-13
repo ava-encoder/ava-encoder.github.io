@@ -173,8 +173,9 @@
     </section>
 
     <section class="paper-section paper-width" id="encoder">
-      <p class="section-label">Component 1 · Agentic Video Encoder</p>
-      <h2>Coarse-to-fine video understanding</h2>
+      <p class="section-label">Component 1</p>
+      <h2>Agentic Video Encoder</h2>
+      <p class="section-subtitle">Coarse-to-Fine Video Understanding</p>
       <p>
         The Agentic Video Encoder first captures the global film context, then analyzes each shot with that context, and finally describes keyframe details with the corresponding shot context. This ordered injection reduces information loss when tightly coupled video content is mapped into structured text.
       </p>
@@ -192,8 +193,9 @@
 
     <section class="paper-section wide-width" id="kg">
       <div class="narrow-intro">
-        <p class="section-label">Component 2 · Film Knowledge Graph</p>
-        <h2>Text-centered structure with a linked multimodal asset layer</h2>
+        <p class="section-label">Component 2</p>
+        <h2>Film Knowledge Graph</h2>
+        <p class="section-subtitle">Text-Centered Structure with a Linked Multimodal Asset Layer</p>
         <p>
           The Story–Event–Shot hierarchy and its Character, Scene, Object, Style, Camera, and Audio states
           store structured text only. Generated keyframes, reference images, audio, and rendered shots are
@@ -210,8 +212,9 @@
 
     <section class="paper-section wide-width" id="loops">
       <div class="narrow-intro">
-        <p class="section-label">Component 3 · Dual-loop textual-gradient evolution</p>
-        <h2>Stage-separated optimization of policy and representation</h2>
+        <p class="section-label">Component 3</p>
+        <h2>Dual-Loop Textual-Gradient Evolution</h2>
+        <p class="section-subtitle">Stage-Separated Optimization of Policy and Representation</p>
         <p>
           The stages update different objects at different times and are not nested. First, the outer loop
           learns the shared shot-level policy before deployment. After the complete policy is frozen, the
@@ -269,8 +272,9 @@
     </section>
 
     <section class="paper-section paper-width" id="reconstruction-error">
-      <p class="section-label">Component 4 · Reconstruction Error</p>
-      <h2>One signal for optimization, one protocol for reporting</h2>
+      <p class="section-label">Component 4</p>
+      <h2>Reconstruction Error</h2>
+      <p class="section-subtitle">One signal for optimization, one protocol for reporting</p>
       <p>
         A complex image or video is difficult to judge with one direct score. AVA-Encoder therefore decomposes each selected keyframe or shot into approximately 30 atomic factual questions. Their answers provide precise reconstruction feedback for optimization, while a separate common protocol provides final comparison across representation systems.
       </p>

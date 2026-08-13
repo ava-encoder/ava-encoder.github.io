@@ -164,6 +164,7 @@ figcaption strong, .table-caption strong { color: var(--ink); }
   letter-spacing: -.025em;
 }
 .paper-section > p:not(.section-label), .narrow-intro > p:not(.section-label) { margin: 0 0 14px; }
+.paper-section > .section-subtitle, .narrow-intro > .section-subtitle { margin: -10px 0 18px; color: var(--violet); font-family: Newsreader, Georgia, serif; font-size: 18px; font-weight: 500; }
 .narrow-intro { width: min(calc(100% - 48px), var(--paper-width)); margin: 0 auto 27px; }
 
 .problem-pair { display: grid; grid-template-columns: 1fr 72px 1fr; align-items: stretch; margin: 28px 0 19px; }
