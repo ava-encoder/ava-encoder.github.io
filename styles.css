@@ -80,6 +80,7 @@ figure { margin: 0; }
   font-size: 18px;
   line-height: 1.45;
 }
+.author-role { color: var(--violet); font-size: .72em; font-weight: 600; white-space: nowrap; }
 .affiliations {
   max-width: 880px;
   margin: 11px auto 0;
