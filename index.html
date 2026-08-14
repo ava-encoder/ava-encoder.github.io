@@ -23,7 +23,7 @@
 <body>
   <main id="top">
     <section class="masthead paper-width">
-      <h1>AVA-Encoder: Towards Agent-Native Video Representation Learning</h1>
+      <h1>AVA-Encoder: Towards <span class="title-highlight">Agent-Native Video Representation Learning</span></h1>
 
       <div class="authors" aria-label="Authors">
         <span>Chuyue Li<sup>1,2</sup></span>
@@ -56,99 +56,70 @@
       <p class="one-line"><strong>Film space → agent space.</strong> Through self-evolving agentic video auto-encoding, AVA-Encoder autonomously learns to map tightly coupled multimodal films into agent-readable, agent-operable, and cinematically faithful Film Knowledge Graph representations.</p>
     </section>
 
-    <section class="paper-section paper-width" id="problem">
-      <p class="section-label">Motivation</p>
-      <h2>From Film Space to Agent Space</h2>
-      <p class="section-subtitle">Films contain rich creation knowledge, but not in an agent-native form.</p>
-      <p>
-        Video creation agents still lack the planning ability needed to coordinate scripts, characters,
-        shots, and audiovisual elements into production-ready film content. Complete, high-quality
-        agentic video creation trajectories are scarce. Professionally directed films contain rich
-        filmmaking knowledge, yet agents cannot directly use finished films as explicit, step-by-step
-        creation records.
-      </p>
+    <section class="paper-section teaser-section" id="problem">
+      <div class="paper-width teaser-wrap">
+        <figure class="research-teaser">
+          <div class="teaser-grid">
+            <article class="teaser-cell challenge-cell">
+              <p class="teaser-pill challenge">The challenge</p>
+              <h3>Finished films are rich, but not agent-native.</h3>
+              <p>Video creation agents still lack the planning needed for production-ready films, while complete high-quality creation trajectories are scarce. Existing films contain that knowledge, but tightly couple story, character, camera, motion, style, and audio across time.</p>
+              <div class="space-contrast" aria-label="Mismatch between film space and agent space">
+                <div><b>Film space</b><span>visual · audio · temporal · narrative</span></div>
+                <div class="space-gap"><span>representation gap</span><b>→</b></div>
+                <div><b>Agent space</b><span>text · plans · graphs · tools</span></div>
+              </div>
+              <p class="teaser-verdict challenge"><b>Missing creation structure.</b> A finished video does not directly expose the decisions and dependencies needed for agentic learning.</p>
+            </article>
 
-      <div class="problem-pair">
-        <article>
-          <p class="mini-label">Film space</p>
-          <h3>Tightly coupled multimodal content</h3>
-          <p>Stories, character interactions, composition, camera language, temporal pacing, and audio are closely linked across space and time.</p>
-          <p class="concept-line">visual · audio · temporal · narrative</p>
-        </article>
-        <div class="gap-mark"><span>representation gap</span><b>→</b></div>
-        <article>
-          <p class="mini-label">Agent space</p>
-          <h3>Explicit and modular representations</h3>
-          <p>Agents learn and operate through structured text, code, plans, and graphs organized for retrieval, reasoning, planning, and editing.</p>
-          <p class="concept-line">text · code · plans · graphs</p>
-        </article>
-      </div>
+            <article class="teaser-cell answer-cell">
+              <p class="teaser-pill answer">Our answer · AVA-Encoder</p>
+              <h3>Learn a Film KG through reconstruction.</h3>
+              <p>The representation is judged by whether a fixed decoder can reconstruct the source film from it. Reconstruction errors then show what information the representation failed to preserve.</p>
+              <div class="autoencoding-flow" aria-label="Forward agentic video auto-encoding and reconstruction feedback">
+                <div class="flow-row">
+                  <span>Film (V)</span><b>→</b><span>Agentic Video<br>Encoder (E)</span><b>→</b><span>Film KG (G)</span><b>→</b><span>Fixed Decoder</span><b>→</b><span>Reconstruction (hat V)</span>
+                </div>
+                <div class="feedback-row"><span>↖ Outer Loop: improve the shared policy</span><span>↖ Inner Loop: refine the current KG</span></div>
+              </div>
+              <p class="teaser-verdict answer"><b>Self-evolving representation learning.</b> The reconstruction difference supplies textual feedback to the representation process itself.</p>
+            </article>
 
-      <div class="requirement-row">
-        <div><b>Agent-readable</b><span>directly understandable and searchable</span></div>
-        <div><b>Agent-operable</b><span>supports reasoning and linked editing</span></div>
-        <div><b>Cinematically faithful</b><span>preserves information needed for generation</span></div>
-      </div>
+            <article class="teaser-cell representation-cell">
+              <p class="teaser-pill neutral">The representation</p>
+              <h3>Text-centered structure with preserved film dependencies</h3>
+              <div class="representation-map">
+                <div class="hierarchy-line"><span>Story</span><b>→</b><span>Event</span><b>→</b><span>Shot</span></div>
+                <p><b>Structured-text states:</b> Character · Scene · Object · Style · Camera · Audio</p>
+                <p><b>Linked asset layer:</b> generated keyframes · reference images · audio · rendered shots</p>
+              </div>
+              <div class="requirement-strip">
+                <span><b>Agent-readable</b> direct text access</span>
+                <span><b>Agent-operable</b> graph-based reasoning and editing</span>
+                <span><b>Cinematically faithful</b> dependencies retained by typed edges</span>
+              </div>
+            </article>
 
-      <div class="core-answer">
-        <div>
-          <p class="mini-label">Our answer</p>
-          <h3>Learn the representation through reconstruction.</h3>
-          <p>AVA-Encoder encodes a film into a text-centered Film KG and reconstructs it with a fixed decoder. Reconstruction differences become textual feedback: the Outer Loop improves the Agentic Video Encoder, while the Inner Loop refines the Film KG.</p>
-        </div>
-        <div class="core-flow" aria-label="AVA-Encoder forward auto-encoding path and reconstruction-feedback loops">
-          <svg viewBox="0 0 680 245" role="img" aria-labelledby="core-flow-title core-flow-desc">
-            <title id="core-flow-title">AVA-Encoder self-evolving auto-encoding loop</title>
-            <desc id="core-flow-desc">A film passes through the Agentic Video Encoder to a Film Knowledge Graph and through a fixed decoder to a reconstruction. Reconstruction-derived textual feedback returns to both the Agentic Video Encoder through the Outer Loop and the Film Knowledge Graph through the Inner Loop.</desc>
-            <defs>
-              <marker id="arrow-forward" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z"></path></marker>
-              <marker id="arrow-outer" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z"></path></marker>
-              <marker id="arrow-inner" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z"></path></marker>
-            </defs>
-
-            <g class="flow-node">
-              <rect x="8" y="43" width="72" height="48" rx="4"></rect>
-              <text x="44" y="64">Film</text><text x="44" y="80">V</text>
-            </g>
-            <g class="flow-node flow-encoder">
-              <rect x="110" y="35" width="144" height="64" rx="4"></rect>
-              <text x="182" y="61">Agentic Video</text><text x="182" y="79">Encoder E</text>
-            </g>
-            <g class="flow-node flow-kg">
-              <rect x="285" y="43" width="91" height="48" rx="4"></rect>
-              <text x="330.5" y="64">Film KG</text><text x="330.5" y="80">G</text>
-            </g>
-            <g class="flow-node">
-              <rect x="407" y="35" width="110" height="64" rx="4"></rect>
-              <text x="462" y="61">Fixed</text><text x="462" y="79">Decoder</text>
-            </g>
-            <g class="flow-node">
-              <rect x="548" y="43" width="124" height="48" rx="4"></rect>
-              <text x="610" y="64">Reconstruction</text><text x="610" y="80">V̂</text>
-            </g>
-
-            <path class="flow-forward" d="M80 67 H108" marker-end="url(#arrow-forward)"></path>
-            <path class="flow-forward" d="M254 67 H283" marker-end="url(#arrow-forward)"></path>
-            <path class="flow-forward" d="M376 67 H405" marker-end="url(#arrow-forward)"></path>
-            <path class="flow-forward" d="M517 67 H546" marker-end="url(#arrow-forward)"></path>
-            <text class="flow-caption" x="340" y="19">Forward auto-encoding</text>
-
-            <g class="feedback-node">
-              <rect x="379" y="168" width="231" height="52" rx="4"></rect>
-              <text x="494.5" y="190">Reconstruction-derived</text>
-              <text x="494.5" y="207">textual feedback</text>
-            </g>
-            <path class="feedback-source" d="M610 91 V139 Q610 151 598 151 H506 Q494 151 494 166" marker-end="url(#arrow-forward)"></path>
-            <path class="feedback-outer" d="M421 168 C366 128 234 139 182 101" marker-end="url(#arrow-outer)"></path>
-            <path class="feedback-inner" d="M470 168 C436 132 359 137 331 93" marker-end="url(#arrow-inner)"></path>
-            <text class="outer-label" x="250" y="145">Outer Loop · policy feedback</text>
-            <text class="inner-label" x="386" y="126">Inner Loop · representation feedback</text>
-          </svg>
-        </div>
+            <article class="teaser-cell evidence-cell">
+              <p class="teaser-pill neutral">What the closed loop delivers</p>
+              <h3>Two stages, two optimization objects</h3>
+              <div class="stage-lines">
+                <div><b>Outer Loop</b><span>Before deployment</span><p>learns the shared shot-level encoding policy across videos</p></div>
+                <div><b>Inner Loop</b><span>Optional at test time</span><p>refines only the Film KG of the current input</p></div>
+              </div>
+              <div class="teaser-metrics">
+                <div><b>49.0</b><span>Overall reconstruction</span></div>
+                <div><b>+20.7</b><span>points over strongest baseline</span></div>
+                <div><b>+6.6</b><span>points from both stages</span></div>
+              </div>
+            </article>
+          </div>
+          <figcaption><b>AVA-Encoder in one view.</b> It bridges film space and agent space by learning a text-centered Film Knowledge Graph through reconstruction. Typed relations preserve film dependencies, while stage-separated textual feedback improves the shared Agentic Video Encoder policy and the input-specific representation.</figcaption>
+        </figure>
       </div>
     </section>
 
-    <section class="paper-section paper-width" id="abstract">
+    <section class="paper-section paper-width section-alt" id="abstract">
       <p class="section-label">Abstract</p>
       <h2>Agentic Video Auto-Encoding</h2>
       <div class="abstract-text">
@@ -174,7 +145,7 @@
       </div>
     </section>
 
-    <section class="paper-section paper-width" id="method">
+    <section class="paper-section paper-width section-alt" id="method">
       <p class="section-label">Method</p>
       <h2>From film space to an agent-native intermediate representation</h2>
       <p>
@@ -223,7 +194,7 @@
       </p>
     </section>
 
-    <section class="paper-section wide-width" id="kg">
+    <section class="paper-section wide-width section-alt" id="kg">
       <div class="narrow-intro">
         <p class="section-label">Component 2</p>
         <h2>Film Knowledge Graph</h2>
@@ -297,13 +268,13 @@
         </figure>
       </div>
       <p class="figure-note">
-        In these Figure 2 schematics, \(R(\cdot,\cdot)\) denotes reconstruction-derived loop feedback.
+        In the dual-loop schematics above, \(R(\cdot,\cdot)\) denotes reconstruction-derived loop feedback.
         The paper's formal optimization notation is \(R_{\mathrm{reward}}\); the separate final reporting
         protocol \(R_{\mathrm{eval}}\) is not used to optimize either loop.
       </p>
     </section>
 
-    <section class="paper-section paper-width" id="reconstruction-error">
+    <section class="paper-section paper-width section-alt" id="reconstruction-error">
       <p class="section-label">Component 4</p>
       <h2>Reconstruction Error</h2>
       <p class="section-subtitle">One signal for optimization, one protocol for reporting</p>
@@ -331,8 +302,8 @@
     </section>
 
     <section class="paper-section paper-width" id="results">
-      <p class="section-label">Quantitative results</p>
-      <h2>Reconstruction fidelity</h2>
+      <p class="section-label">Quantitative · RQ1</p>
+      <h2>Does AVA-Encoder improve reconstruction fidelity?</h2>
       <p>
         Final evaluation uses direct Video comparison (V), direct Keyframe comparison (KF), Video
         Back-Captioning (V-BC), and Keyframe Back-Captioning (KF-BC). Overall is their unweighted mean.
@@ -355,9 +326,22 @@
         <article><b>45.8 vs. 44.4</b><p>Pseudo-trained versus human-tuned policy under the controlled policy-only comparison.</p></article>
         <article><b>710 / 730</b><p>Automatic rankings agree with two mutually blinded expert annotators on 97.3% of comparison triples.</p></article>
       </div>
+
+      <h3 class="subsection-title"><span>RQ2</span> What does each optimization stage contribute?</h3>
+      <p class="subsection-intro">The controlled ordering separates the two stages: (49.0) with both stages, (45.8) with policy pseudo-training only, (45.4) with KG refinement only, and (42.4) with neither. Each stage improves reconstruction on its own, and their combination performs best.</p>
+      <div class="ablation-track" aria-label="Overall reconstruction score for controlled dual-loop ablations">
+        <div style="--score:42.4"><span>Neither stage</span><i></i><b>42.4</b></div>
+        <div style="--score:45.4"><span>Inner Loop only</span><i></i><b>45.4</b></div>
+        <div style="--score:45.8"><span>Outer Loop only</span><i></i><b>45.8</b></div>
+        <div class="best" style="--score:49"><span>Both stages</span><i></i><b>49.0</b></div>
+      </div>
+      <div class="controlled-findings">
+        <article><p class="mini-label">Policy evolution</p><b>45.8 &gt; 44.4</b><p>The pseudo-trained policy exceeds the human-tuned policy with the Inner Loop disabled in both conditions, while reducing system-prompt tokens from 31,336 to 8,052.</p></article>
+        <article><p class="mini-label">Acceptance gates</p><b>49.0 &gt; 43.5</b><p>The complete gated system improves Overall by 5.5 points over removing both acceptance gates.</p></article>
+      </div>
     </section>
 
-    <section class="paper-section wide-width" id="reconstruction">
+    <section class="paper-section wide-width section-alt" id="reconstruction">
       <div class="narrow-intro">
         <p class="section-label">Qualitative reconstruction results</p>
         <h2>Reconstruction across six source videos</h2>
@@ -366,28 +350,36 @@
         </p>
       </div>
 
-      <div class="reconstruction-gallery">
-        <figure class="academic-figure">
+      <div class="gallery-tabs" role="tablist" aria-label="Reconstruction cases">
+        <button class="active" type="button" role="tab" aria-selected="true" data-gallery-tab="reconstruction" data-target="recon-case02">Zombie Cleaner</button>
+        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case05">Kung Fu Panda</button>
+        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case09">Shameless</button>
+        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case10">Titanic</button>
+        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case12">Zootopia</button>
+        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case18">Malfoy Broom</button>
+      </div>
+      <div class="reconstruction-gallery" data-gallery="reconstruction">
+        <figure class="academic-figure" id="recon-case02">
           <a href="assets/reconstruct_case02_zombie_cleaner.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case02_zombie_cleaner.jpg" alt="Qualitative reconstruction comparison on Zombie Cleaner."></a>
           <figcaption><strong>Zombie Cleaner.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure">
+        <figure class="academic-figure" id="recon-case05" hidden>
           <a href="assets/reconstruct_case05_kung_fu_panda.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case05_kung_fu_panda.jpg" alt="Qualitative reconstruction comparison on Kung Fu Panda."></a>
           <figcaption><strong>Kung Fu Panda.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure">
+        <figure class="academic-figure" id="recon-case09" hidden>
           <a href="assets/reconstruct_case09_shameless.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case09_shameless.jpg" alt="Qualitative reconstruction comparison on Shameless."></a>
           <figcaption><strong>Shameless.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure">
+        <figure class="academic-figure" id="recon-case10" hidden>
           <a href="assets/reconstruct_case10_titanic.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case10_titanic.jpg" alt="Qualitative reconstruction comparison on Titanic."></a>
           <figcaption><strong>Titanic.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure">
+        <figure class="academic-figure" id="recon-case12" hidden>
           <a href="assets/reconstruct_case12_zootopia_popsicle.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case12_zootopia_popsicle.jpg" alt="Qualitative reconstruction comparison on the Zootopia popsicle sequence."></a>
           <figcaption><strong>Zootopia: Popsicle.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure">
+        <figure class="academic-figure" id="recon-case18" hidden>
           <a href="assets/reconstruct_case18_malfoy_broom.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case18_malfoy_broom.jpg" alt="Qualitative reconstruction comparison on the Malfoy broom sequence."></a>
           <figcaption><strong>Harry Potter: Malfoy Broom.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
@@ -397,27 +389,47 @@
 
     <section class="paper-section wide-width" id="editing">
       <div class="narrow-intro">
-        <p class="section-label">KG operability</p>
+        <p class="section-label">KG operability · RQ3</p>
         <h2>Graph-topology linked editing</h2>
         <p>
           A local graph edit follows typed dependencies to update affected character states, actions, dialogue, keyframes, and shots while preserving unrelated subgraphs. The examples show two identity-editing settings and one visual-treatment edit.
         </p>
       </div>
 
-      <figure class="academic-figure result-figure">
+      <div class="gallery-tabs" role="tablist" aria-label="Graph editing examples">
+        <button class="active" type="button" role="tab" aria-selected="true" data-gallery-tab="editing" data-target="edit-identity">Identity edit</button>
+        <button type="button" role="tab" aria-selected="false" data-gallery-tab="editing" data-target="edit-cross-domain">Cross-domain identity</button>
+        <button type="button" role="tab" aria-selected="false" data-gallery-tab="editing" data-target="edit-treatment">Visual treatment</button>
+      </div>
+      <div class="editing-gallery" data-gallery="editing">
+      <figure class="academic-figure result-figure" id="edit-identity">
         <img src="assets/identity_editing.jpg" alt="Identity replacements in a six-shot sequence.">
         <figcaption><strong>Identity editing across a six-shot sequence.</strong> A registered character is replaced with sports, fantasy, classical, or cartoon identities. The edit propagates to dependent appearance, actions, dialogue, keyframes, and shots.</figcaption>
       </figure>
 
-      <figure class="academic-figure result-figure">
+      <figure class="academic-figure result-figure" id="edit-cross-domain" hidden>
         <img src="assets/identity_editing_hongloumeng.jpg" alt="Cross-domain identity replacements in a classical-drama sequence.">
         <figcaption><strong>Cross-domain identity editing.</strong> Character replacement is propagated through a classical-drama sequence while unrelated characters, scenes, compositions, and event structure remain unchanged.</figcaption>
       </figure>
 
-      <figure class="academic-figure result-figure">
+      <figure class="academic-figure result-figure" id="edit-treatment" hidden>
         <img src="assets/visual_treatment_editing.jpg" alt="Visual-treatment editing across linked shots.">
         <figcaption><strong>Visual-treatment editing.</strong> The edit follows the corresponding style-state transitions and asset references, applying a consistent treatment across linked shots without rewriting each shot independently.</figcaption>
       </figure>
+      </div>
+    </section>
+
+    <section class="paper-section paper-width section-alt" id="downstream">
+      <p class="section-label">Downstream reuse · RQ4</p>
+      <h2>Can the learned representation improve other video agents?</h2>
+      <p>We supply the complete AVA-Encoder representation once as text, with the same basic one-sentence request to refer to it for the current case. No framework-specific adapter or prompt tuning is used. Overall story-video quality improves for all four tested systems.</p>
+      <div class="downstream-comparison">
+        <div><b>MovieAgent</b><span>2.47</span><i>→</i><strong>3.30</strong></div>
+        <div><b>FilmAgent</b><span>1.85</span><i>→</i><strong>2.83</strong></div>
+        <div><b>Anim-Director</b><span>1.85</span><i>→</i><strong>2.50</strong></div>
+        <div><b>VideoStudio</b><span>1.90</span><i>→</i><strong>1.95</strong></div>
+      </div>
+      <p class="table-caption"><strong>Downstream story-video quality (1–4).</strong> Values compare generation without the representation to generation with a single textual injection of the complete AVA-Encoder representation.</p>
     </section>
 
     <section class="paper-section paper-width" id="dataset">
@@ -432,7 +444,7 @@
       </p>
     </section>
 
-    <section class="paper-section paper-width" id="release">
+    <section class="paper-section paper-width section-alt" id="release">
       <p class="section-label">Release</p>
       <h2>Code coming soon</h2>
       <p>
