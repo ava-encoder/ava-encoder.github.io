@@ -56,67 +56,11 @@
       <p class="one-line"><strong>Film space → agent space.</strong> Through self-evolving agentic video auto-encoding, AVA-Encoder autonomously learns to map tightly coupled multimodal films into agent-readable, agent-operable, and cinematically faithful Film Knowledge Graph representations.</p>
     </section>
 
-    <section class="paper-section teaser-section" id="problem">
-      <div class="paper-width teaser-wrap">
-        <figure class="research-teaser">
-          <div class="teaser-grid">
-            <article class="teaser-cell challenge-cell">
-              <p class="teaser-pill challenge">The challenge</p>
-              <h3>Finished films are rich, but not agent-native.</h3>
-              <p>Video creation agents still lack the planning needed for production-ready films, while complete high-quality creation trajectories are scarce. Existing films contain that knowledge, but tightly couple story, character, camera, motion, style, and audio across time.</p>
-              <div class="space-contrast" aria-label="Mismatch between film space and agent space">
-                <div><b>Film space</b><span>visual · audio · temporal · narrative</span></div>
-                <div class="space-gap"><span>representation gap</span><b>→</b></div>
-                <div><b>Agent space</b><span>text · plans · graphs · tools</span></div>
-              </div>
-              <p class="teaser-verdict challenge"><b>Missing creation structure.</b> A finished video does not directly expose the decisions and dependencies needed for agentic learning.</p>
-            </article>
-
-            <article class="teaser-cell answer-cell">
-              <p class="teaser-pill answer">Our answer · AVA-Encoder</p>
-              <h3>Learn a Film KG through reconstruction.</h3>
-              <p>The representation is judged by whether a fixed decoder can reconstruct the source film from it. Reconstruction errors then show what information the representation failed to preserve.</p>
-              <div class="autoencoding-flow" aria-label="Forward agentic video auto-encoding and reconstruction feedback">
-                <div class="flow-row">
-                  <span>Film (V)</span><b>→</b><span>Agentic Video<br>Encoder (E)</span><b>→</b><span>Film KG (G)</span><b>→</b><span>Fixed Decoder</span><b>→</b><span>Reconstruction (hat V)</span>
-                </div>
-                <div class="feedback-row"><span>↖ Outer Loop: improve the shared policy</span><span>↖ Inner Loop: refine the current KG</span></div>
-              </div>
-              <p class="teaser-verdict answer"><b>Self-evolving representation learning.</b> The reconstruction difference supplies textual feedback to the representation process itself.</p>
-            </article>
-
-            <article class="teaser-cell representation-cell">
-              <p class="teaser-pill neutral">The representation</p>
-              <h3>Text-centered structure with preserved film dependencies</h3>
-              <div class="representation-map">
-                <div class="hierarchy-line"><span>Story</span><b>→</b><span>Event</span><b>→</b><span>Shot</span></div>
-                <p><b>Structured-text states:</b> Character · Scene · Object · Style · Camera · Audio</p>
-                <p><b>Linked asset layer:</b> generated keyframes · reference images · audio · rendered shots</p>
-              </div>
-              <div class="requirement-strip">
-                <span><b>Agent-readable</b> direct text access</span>
-                <span><b>Agent-operable</b> graph-based reasoning and editing</span>
-                <span><b>Cinematically faithful</b> dependencies retained by typed edges</span>
-              </div>
-            </article>
-
-            <article class="teaser-cell evidence-cell">
-              <p class="teaser-pill neutral">What the closed loop delivers</p>
-              <h3>Two stages, two optimization objects</h3>
-              <div class="stage-lines">
-                <div><b>Outer Loop</b><span>Before deployment</span><p>learns the shared shot-level encoding policy across videos</p></div>
-                <div><b>Inner Loop</b><span>Optional at test time</span><p>refines only the Film KG of the current input</p></div>
-              </div>
-              <div class="teaser-metrics">
-                <div><b>49.0</b><span>Overall reconstruction</span></div>
-                <div><b>+20.7</b><span>points over strongest baseline</span></div>
-                <div><b>+6.6</b><span>points from both stages</span></div>
-              </div>
-            </article>
-          </div>
-          <figcaption><b>AVA-Encoder in one view.</b> It bridges film space and agent space by learning a text-centered Film Knowledge Graph through reconstruction. Typed relations preserve film dependencies, while stage-separated textual feedback improves the shared Agentic Video Encoder policy and the input-specific representation.</figcaption>
-        </figure>
-      </div>
+    <section class="paper-section wide-width framework-lead" id="overview">
+      <figure class="academic-figure">
+        <img src="assets/ava_encoder_pipeline.png" alt="Overview of AVA-Encoder, the multi-level Agentic Video Encoder, and the Film Knowledge Graph representation.">
+        <figcaption><strong>AVA-Encoder overview.</strong> The framework maps an input film to a text-centered Film Knowledge Graph (KG), reconstructs the film through a fixed decoder, and uses reconstruction-derived textual feedback to improve the shared Agentic Video Encoder policy and the input-specific representation at separate stages.</figcaption>
+      </figure>
     </section>
 
     <section class="paper-section paper-width section-alt" id="abstract">
@@ -159,13 +103,6 @@
         in \(G\). Reconstruction errors provide grounded evidence for improving the shared encoding policy
         and the input-specific representation at separate stages.
       </p>
-
-      <figure class="academic-figure method-overview">
-        <img src="assets/ava_encoder_pipeline.png" alt="Overview of AVA-Encoder, the multi-level Agentic Video Encoder, and the Film Knowledge Graph representation.">
-        <figcaption>
-          <strong>AVA-Encoder overview.</strong> An input film is mapped to a text-centered Film Knowledge Graph (KG), reconstructed through a fixed decoder, and improved using reconstruction-derived textual feedback. The Agentic Video Encoder performs film-, shot-, and keyframe-level understanding, while typed graph relations preserve dependencies among structured text descriptions and generated assets.
-        </figcaption>
-      </figure>
 
       <div class="method-list">
         <article><span>01</span><div><h3>Multi-level Agentic Video Encoder</h3><p>Film-, shot-, and keyframe-level understanding maps dense multimodal video into structured text, with each finer level receiving context from the preceding level.</p></div></article>

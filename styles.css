@@ -179,6 +179,9 @@ figcaption,
 figcaption strong,
 .table-caption strong { color: var(--ink); }
 
+.framework-lead { padding-top: 36px; padding-bottom: 42px; }
+.framework-lead .academic-figure { width: min(100%, 1280px); }
+
 .teaser-section { padding-top: 42px; }
 .teaser-wrap { max-width: 1120px; }
 .research-teaser {
