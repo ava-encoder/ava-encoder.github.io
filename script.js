@@ -20,22 +20,3 @@ document.querySelectorAll('[data-copy-target]').forEach((button) => {
     }
   });
 });
-
-document.querySelectorAll('[data-gallery-tab]').forEach((button) => {
-  button.addEventListener('click', () => {
-    const galleryName = button.dataset.galleryTab;
-    const targetId = button.dataset.target;
-    const gallery = document.querySelector(`[data-gallery="${galleryName}"]`);
-    if (!gallery || !targetId) return;
-
-    document.querySelectorAll(`[data-gallery-tab="${galleryName}"]`).forEach((tab) => {
-      const selected = tab === button;
-      tab.classList.toggle('active', selected);
-      tab.setAttribute('aria-selected', selected ? 'true' : 'false');
-    });
-
-    gallery.querySelectorAll('figure').forEach((panel) => {
-      panel.hidden = panel.id !== targetId;
-    });
-  });
-});

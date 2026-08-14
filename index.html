@@ -276,47 +276,54 @@
         <article><p class="mini-label">Policy evolution</p><b>45.8 &gt; 44.4</b><p>The pseudo-trained policy exceeds the human-tuned policy with the Inner Loop disabled in both conditions, while reducing system-prompt tokens from 31,336 to 8,052.</p></article>
         <article><p class="mini-label">Acceptance gates</p><b>49.0 &gt; 43.5</b><p>The complete gated system improves Overall by 5.5 points over removing both acceptance gates.</p></article>
       </div>
+      <div class="results-table-wrap ablation-results">
+        <table class="ablation-table">
+          <thead><tr><th>Ablation setting</th><th>V ↑</th><th>KF ↑</th><th>V-BC ↑</th><th>KF-BC ↑</th><th>Overall ↑</th></tr></thead>
+          <tbody>
+            <tr><td>Single-level understanding</td><td>35.1</td><td>38.4</td><td>15.4</td><td>21.1</td><td>27.5</td></tr>
+            <tr><td>Remove Data-Independent Encoding Policy Pseudo-Training</td><td>52.7</td><td>71.8</td><td>23.9</td><td>33.1</td><td>45.4</td></tr>
+            <tr><td>Remove Data-Dependent KG Representation Refinement</td><td>55.6</td><td>68.3</td><td>26.6</td><td>32.7</td><td>45.8</td></tr>
+            <tr><td>Remove both optimization loops</td><td>50.7</td><td>67.6</td><td>21.2</td><td>29.9</td><td>42.4</td></tr>
+            <tr><td>Human-tuned Agentic Video Encoder</td><td>53.5</td><td>68.1</td><td>25.8</td><td>30.2</td><td>44.4</td></tr>
+            <tr><td>Remove acceptance gates</td><td>53.1</td><td>67.2</td><td>24.3</td><td>29.4</td><td>43.5</td></tr>
+            <tr class="ours"><td>AVA-Encoder (full)</td><td>57.8</td><td>73.7</td><td>29.7</td><td>34.6</td><td>49.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-caption"><strong>Reconstruction ablation results (%).</strong> The comparison directions are direct Video comparison (V), direct Keyframe comparison (KF), Video Back-Captioning (V-BC), and Keyframe Back-Captioning (KF-BC). Overall is their unweighted mean.</p>
     </section>
 
     <section class="paper-section wide-width section-alt" id="reconstruction">
       <div class="narrow-intro">
         <p class="section-label">Qualitative reconstruction results</p>
-        <h2>Reconstruction across six source videos</h2>
+        <h2>Reconstruction Showcases</h2>
         <p>
           Each comparison uses the shared generation setting. Rows show GT, AVA-Encoder, soap2soap, VideoAnalyzer, Storyboard Studio, and the naive Agentic Video Encoder.
         </p>
       </div>
 
-      <div class="gallery-tabs" role="tablist" aria-label="Reconstruction cases">
-        <button class="active" type="button" role="tab" aria-selected="true" data-gallery-tab="reconstruction" data-target="recon-case02">Zombie Cleaner</button>
-        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case05">Kung Fu Panda</button>
-        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case09">Shameless</button>
-        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case10">Titanic</button>
-        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case12">Zootopia</button>
-        <button type="button" role="tab" aria-selected="false" data-gallery-tab="reconstruction" data-target="recon-case18">Malfoy Broom</button>
-      </div>
-      <div class="reconstruction-gallery" data-gallery="reconstruction">
+      <div class="reconstruction-gallery">
         <figure class="academic-figure" id="recon-case02">
           <a href="assets/reconstruct_case02_zombie_cleaner.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case02_zombie_cleaner.jpg" alt="Qualitative reconstruction comparison on Zombie Cleaner."></a>
           <figcaption><strong>Zombie Cleaner.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure" id="recon-case05" hidden>
+        <figure class="academic-figure" id="recon-case05">
           <a href="assets/reconstruct_case05_kung_fu_panda.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case05_kung_fu_panda.jpg" alt="Qualitative reconstruction comparison on Kung Fu Panda."></a>
           <figcaption><strong>Kung Fu Panda.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure" id="recon-case09" hidden>
+        <figure class="academic-figure" id="recon-case09">
           <a href="assets/reconstruct_case09_shameless.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case09_shameless.jpg" alt="Qualitative reconstruction comparison on Shameless."></a>
           <figcaption><strong>Shameless.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure" id="recon-case10" hidden>
+        <figure class="academic-figure" id="recon-case10">
           <a href="assets/reconstruct_case10_titanic.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case10_titanic.jpg" alt="Qualitative reconstruction comparison on Titanic."></a>
           <figcaption><strong>Titanic.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure" id="recon-case12" hidden>
+        <figure class="academic-figure" id="recon-case12">
           <a href="assets/reconstruct_case12_zootopia_popsicle.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case12_zootopia_popsicle.jpg" alt="Qualitative reconstruction comparison on the Zootopia popsicle sequence."></a>
           <figcaption><strong>Zootopia: Popsicle.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
-        <figure class="academic-figure" id="recon-case18" hidden>
+        <figure class="academic-figure" id="recon-case18">
           <a href="assets/reconstruct_case18_malfoy_broom.jpg" target="_blank" rel="noreferrer"><img src="assets/reconstruct_case18_malfoy_broom.jpg" alt="Qualitative reconstruction comparison on the Malfoy broom sequence."></a>
           <figcaption><strong>Harry Potter: Malfoy Broom.</strong> Qualitative reconstruction comparison under the shared generation setting.</figcaption>
         </figure>
@@ -333,23 +340,18 @@
         </p>
       </div>
 
-      <div class="gallery-tabs" role="tablist" aria-label="Graph editing examples">
-        <button class="active" type="button" role="tab" aria-selected="true" data-gallery-tab="editing" data-target="edit-identity">Identity edit</button>
-        <button type="button" role="tab" aria-selected="false" data-gallery-tab="editing" data-target="edit-cross-domain">Cross-domain identity</button>
-        <button type="button" role="tab" aria-selected="false" data-gallery-tab="editing" data-target="edit-treatment">Visual treatment</button>
-      </div>
-      <div class="editing-gallery" data-gallery="editing">
+      <div class="editing-gallery">
       <figure class="academic-figure result-figure" id="edit-identity">
         <img src="assets/identity_editing.jpg" alt="Identity replacements in a six-shot sequence.">
         <figcaption><strong>Identity editing across a six-shot sequence.</strong> A registered character is replaced with sports, fantasy, classical, or cartoon identities. The edit propagates to dependent appearance, actions, dialogue, keyframes, and shots.</figcaption>
       </figure>
 
-      <figure class="academic-figure result-figure" id="edit-cross-domain" hidden>
+      <figure class="academic-figure result-figure" id="edit-cross-domain">
         <img src="assets/identity_editing_hongloumeng.jpg" alt="Cross-domain identity replacements in a classical-drama sequence.">
         <figcaption><strong>Cross-domain identity editing.</strong> Character replacement is propagated through a classical-drama sequence while unrelated characters, scenes, compositions, and event structure remain unchanged.</figcaption>
       </figure>
 
-      <figure class="academic-figure result-figure" id="edit-treatment" hidden>
+      <figure class="academic-figure result-figure" id="edit-treatment">
         <img src="assets/visual_treatment_editing.jpg" alt="Visual-treatment editing across linked shots.">
         <figcaption><strong>Visual-treatment editing.</strong> The edit follows the corresponding style-state transitions and asset references, applying a consistent treatment across linked shots without rewriting each shot independently.</figcaption>
       </figure>

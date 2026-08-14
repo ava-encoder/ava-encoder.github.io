@@ -468,6 +468,9 @@ tr.ours td { color: #2b317b; background: var(--violet-light); font-weight: 700; 
 .controlled-findings .mini-label { margin: 0 0 6px; }
 .controlled-findings article > b { color: var(--ink); font-family: Newsreader, Georgia, serif; font-size: 22px; }
 .controlled-findings article > p:last-child { margin: 5px 0 0; color: var(--muted); font-size: 13.5px; }
+.ablation-results { margin-top: 27px; }
+.ablation-table th:first-child,
+.ablation-table td:first-child { width: 48%; white-space: normal; }
 
 .gallery-tabs {
   display: flex;
@@ -491,7 +494,8 @@ tr.ours td { color: #2b317b; background: var(--violet-light); font-weight: 700; 
 .academic-figure[hidden] { display: none; }
 .reconstruction-gallery,
 .editing-gallery { min-height: 0; }
-.editing-gallery .result-figure { margin-top: 0; }
+.editing-gallery { display: grid; gap: 30px; }
+.editing-gallery .result-figure { margin: 0; }
 
 .downstream-comparison {
   max-width: 780px;
