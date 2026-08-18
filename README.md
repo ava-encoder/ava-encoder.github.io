@@ -6,7 +6,7 @@
 
 **Turning films into structured, editable, and cinematically faithful representations for creative agents.**
 
-[![Paper](https://img.shields.io/badge/Paper-Coming_Soon-8A2BE2?style=for-the-badge)](#paper)
+[![Paper](https://img.shields.io/badge/Paper-arXiv-8A2BE2?style=for-the-badge)](https://arxiv.org/abs/2608.12313)
 [![Code](https://img.shields.io/badge/Code-GitHub-2F80ED?style=for-the-badge)](https://github.com/HBDYW/AVA-Encoder)
 [![Dataset](https://img.shields.io/badge/Dataset-Details-27AE60?style=for-the-badge)](#film-kg-dataset)
 
@@ -160,7 +160,7 @@ Please watch or star this repository to follow future releases.
 
 **AVA-Encoder: Towards Agent-Native Video Representation Learning**
 
-The public paper link will be added here when available.
+Paper page: [https://arxiv.org/abs/2608.12313](https://arxiv.org/abs/2608.12313)
 
 ## Citation
 
