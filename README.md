@@ -7,21 +7,22 @@
 **Turning films into structured, editable, and cinematically faithful representations for creative agents.**
 
 [![Paper](https://img.shields.io/badge/Paper-Coming_Soon-8A2BE2?style=for-the-badge)](#paper)
-[![Code](https://img.shields.io/badge/Code-Coming_Soon-2F80ED?style=for-the-badge)](#release-status)
-[![Dataset](https://img.shields.io/badge/Dataset-Coming_Soon-27AE60?style=for-the-badge)](#film-knowledge-graph-dataset)
+[![Code](https://img.shields.io/badge/Code-GitHub-2F80ED?style=for-the-badge)](https://github.com/HBDYW/AVA-Encoder)
+[![Dataset](https://img.shields.io/badge/Dataset-Details-27AE60?style=for-the-badge)](#film-kg-dataset)
 
-Chuyue Li<sup>1,2</sup>, Jinpeng Yu<sup>1</sup>, Haozhe Wang<sup>1,3</sup>, Tian Xueyun<sup>1,4</sup>, Zhijing Zhang<sup>1,5</sup>, Bingnan Li<sup>1</sup>, Shuqi Gu<sup>2</sup>, Kan Ren<sup>2,*</sup>, Jiaming Liu<sup>1,*</sup>, Ruihua Huang<sup>1</sup>
+Chuyue Li<sup>1,2</sup>, Jinpeng Yu<sup>1,†</sup>, Haozhe Wang<sup>1,3</sup>, Tian Xueyun<sup>1,4</sup>, Zhijing Zhang<sup>1,5</sup>, Bingnan Li<sup>1</sup>, Shuqi Gu<sup>2</sup>, Kan Ren<sup>2,*</sup>, Jiaming Liu<sup>1,*</sup>, Ruihua Huang<sup>1</sup>
 
 <sup>1</sup>Qwen Business Unit of Alibaba &nbsp;&nbsp; <sup>2</sup>ShanghaiTech University  
 <sup>3</sup>The Hong Kong University of Science and Technology  
 <sup>4</sup>Institute of Computing Technology &nbsp;&nbsp; <sup>5</sup>Southeast University  
+<sup>†</sup>Project Lead<br>
 <sup>*</sup>Co-corresponding authors
 
 **[Problem](#the-problem) · [Our Answer](#our-answer) · [Framework](#framework) · [Results](#main-results) · [Reconstruction](#qualitative-reconstruction) · [Editing](#agent-operable-film-knowledge-graph) · [Release](#release-status) · [Citation](#citation)**
 
 </div>
 
-> **In one sentence:** AVA-Encoder learns an agent-native, text-centered film knowledge graph by reconstructing the source film and using reconstruction errors to improve the shared encoding policy and each input-specific representation at separate stages.
+> **In one sentence:** AVA-Encoder learns an agent-native, text-centered Film Knowledge Graph by reconstructing the source film and using the reconstruction residual to improve the shared encoding policy and each input-specific representation at separate stages.
 
 ## The Problem
 
@@ -41,13 +42,13 @@ This limitation leads to a fundamental mismatch: films encode narrative, visual,
 
 ### Agentic video auto-encoding
 
-**AVA-Encoder** converts a film into a text-centered film-creation knowledge-graph (KG) representation, reconstructs the film from that representation through a fixed decoder, and uses the observed reconstruction errors to improve the representation process. Following the paper notation, the core auto-encoding path is
+**AVA-Encoder** converts a film into a text-centered Film Knowledge Graph (KG) representation, reconstructs the film from that representation through a fixed decoder, and uses the observed reconstruction residual to improve the representation process. Following the paper notation, the core auto-encoding path is
 
 $$
 G = E(V;P), \qquad \hat V = \mathrm{Dec}(G),
 $$
 
-where $V$ is the input film, $P=(P_{\mathrm{film}},P_{\mathrm{shot}},P_{\mathrm{kf}})$ is the complete Agentic Video Encoder policy, $G$ is the resulting KG representation, and $\hat V$ is the reconstructed video. The fixed decoder $\mathrm{Dec}$ consists of a fixed text-to-image model followed by a fixed image-to-video model.
+where $V$ is the input film, $P=(P_{\mathrm{film}},P_{\mathrm{shot}},P_{\mathrm{kf}})$ is the complete Agentic Video Encoder policy, $G$ is the resulting Film KG representation, and $\hat V$ is the reconstructed video. The fixed decoder $\mathrm{Dec}$ is a static rendering pipeline that calls fixed generation models as tools.
 
 <p align="center">
   <img src="assets/ava_encoder_pipeline.png" width="100%" alt="AVA-Encoder framework overview">
@@ -63,7 +64,7 @@ The resulting representation is designed to be:
 
 | **1 · Faithful representation** | **2 · Self-evolving encoding** | **3 · Operable film knowledge** |
 |:--|:--|:--|
-| Reconstruction directly tests whether a representation preserves enough cinematic information for future generation. AVA-Encoder reaches **49.0% Overall**, outperforming the strongest external baseline by **20.7 points**. | Two stage-separated textual-gradient loops improve different objects at different times: the outer stage updates the shared shot-level policy, and optional test-time refinement updates only the current input's KG. Together they add **6.6 points** over removing both stages. | Typed KG relations make film knowledge directly queryable and editable. A local change can update dependent identities, actions, dialogue, keyframes, and shots while preserving unrelated content. |
+| Reconstruction directly tests whether a representation preserves enough cinematic information for future generation. AVA-Encoder reaches **49.0% Overall**, outperforming the strongest external baseline by **20.7 points**. | Two stage-separated textual-gradient loops improve different objects at different times: the outer stage updates the shared shot- and keyframe-level policies, and optional test-time refinement updates only the current input's KG. Together they add **6.6 points** over removing both stages. | Typed KG relations make film knowledge directly queryable and editable. A local change can update dependent identities, actions, dialogue, keyframes, and shots while preserving unrelated content. |
 
 ## Why Reconstruction?
 
@@ -71,12 +72,12 @@ Downstream understanding tasks may succeed even when a representation has discar
 
 ## Framework
 
-AVA-Encoder contains four connected components:
+AVA-Encoder contains three core components and a reconstruction-residual signal design:
 
 1. **Multi-level Agentic Video Encoder.** Film-, shot-, and keyframe-level understanding progressively maps dense video content into structured text while passing high-level context to finer levels.
-2. **Film Knowledge-Graph Representation.** A Story–Event–Shot hierarchy and Character, Scene, Object, Style, Camera, and Audio states separate cinematic information into editable text nodes. Typed edges preserve hierarchy, temporal order, asset references, and cross-shot dependencies.
-3. **Dual-loop Textual-Gradient Evolution.** Data-Independent Encoding Policy Pseudo-Training first improves the shared shot-level Agentic Video Encoder policy $P_{\mathrm{shot}}$ across videos before deployment. After the complete policy is frozen, optional Data-Dependent KG Representation Refinement improves only the current input's $G$ at test time. All foundation-model weights remain fixed, and the two stages never update $P$ and $G$ simultaneously.
-4. **Reconstruction Error.** The loop-facing $R_{\mathrm{reward}}$ diagnoses reconstruction failures and accepts or rejects candidate updates. The separate $R_{\mathrm{eval}}$ provides the common four-direction final evaluation across representation systems and is not used to optimize either loop.
+2. **Film KG Representation.** A Story–Event–Shot hierarchy and Character, Scene, Object, Style, Camera, and Audio states separate cinematic information into editable text nodes. Typed edges preserve hierarchy, temporal order, asset references, and cross-shot dependencies.
+3. **Dual-loop Textual-Gradient Evolution.** Data-Agnostic Encoding Policy Pseudo-Training first improves the shared shot- and keyframe-level Agentic Video Encoder policies $P_{\mathrm{shot}}$ and $P_{\mathrm{kf}}$ in separate branches across videos before deployment. After the complete policy is frozen, optional Data-Dependent KG Representation Refinement improves only the current input's $G$ at test time. All foundation-model weights remain fixed, and the two stages never update $P$ and $G$ simultaneously.
+4. **Reconstruction Residual.** Branch-specific failed evidence diagnoses reconstruction failures and constructs textual gradients, the loop-facing $R_{\mathrm{reward}}$ verifies candidate updates, and the separate $R_{\mathrm{eval}}$ provides the common four-direction final evaluation across representation systems without optimizing either loop.
 
 The Story–Event–Shot hierarchy and its Character, Scene, Object, Style, Camera, and Audio states contain structured text only. Generated keyframes and other image, audio, and video outputs are kept in a linked asset layer. No frame, crop, or screenshot from the source video is stored as an asset or supplied directly to the reconstruction generators.
 
@@ -84,7 +85,7 @@ Final reporting under $R_{\mathrm{eval}}$ uses direct Video comparison (V), dire
 
 ## Main Results
 
-AVA-Encoder achieves the best reconstruction accuracy in all four comparison directions.
+AVA-Encoder achieves the best reconstruction fidelity in all four comparison directions.
 
 | Method | Video ↑ | Keyframe ↑ | Video Back-Captioning ↑ | Keyframe Back-Captioning ↑ | Overall ↑ |
 |:--|--:|--:|--:|--:|--:|
@@ -97,10 +98,10 @@ All values are percentages. Overall is the unweighted mean of the four compariso
 
 Key findings:
 
-- **+20.7 percentage points** over the strongest external baseline in Overall reconstruction accuracy.
+- **+20.7 percentage points**, or a **73.1% relative improvement**, over the strongest external baseline in Overall reconstruction fidelity.
 - **+6.6 percentage points** over removing both optimization stages, equivalent to a **15.6% relative improvement**.
 - In a controlled policy-only comparison, the pseudo-trained Agentic Video Encoder reaches **45.8%**, compared with **44.4%** for a carefully human-tuned policy.
-- The pseudo-trained policy uses **74.3% fewer system-prompt tokens** than the human-tuned policy.
+- The pseudo-trained policy uses **74.3% fewer shot-level** and **70.1% fewer keyframe-level system-prompt tokens** than the human-tuned policy.
 - The automatic reconstruction metrics agree with the judgments of two mutually blinded expert annotators on **710 of 730 comparison triples (97.3%)**.
 
 ## Qualitative Reconstruction
@@ -135,24 +136,23 @@ An identity edit can update the dependent character appearance, actions, dialogu
 
 A visual-treatment edit follows the corresponding style states and asset references, producing a consistent change across linked shots.
 
-## Film Knowledge Graph Dataset
+## Film KG Dataset
 
-We are preparing a Film Knowledge Graph Dataset at the scale of tens of thousands of shots. It contains text-based Film KG representations with fine-grained structured descriptions of scripts, events, characters, scenes, objects, shots, keyframes, camera language, visual style, and audio.
+We construct and release a Film KG Dataset at the scale of tens of thousands of shots. It contains the text portion of Film KG representations derived from high-quality, human-made film content, including fine-grained structured descriptions of scripts, characters, scenes, objects, shots, and keyframes.
 
-The public dataset will contain the structured-text hierarchy, states, and graph relations rather than source-film pixels or generated multimedia assets. Users will be able to connect their own image-, audio-, and video-generation APIs, use the representations as agentic video creation trajectories, or perform linked graph editing without first rendering a video.
+The released dataset contains the structured-text hierarchy, states, and graph relations rather than source-film pixels or generated image, audio, and video assets. Users can connect their own generation APIs, use the representations as agentic video creation trajectories, or perform linked graph editing without first rendering a video.
 
 ## Release Status
 
 > [!IMPORTANT]
-> **Code is coming soon.** We are preparing the implementation, evaluation toolkit, system prompts, data documentation, and graph-editing interface for public release in this repository.
+> **Source code is available at [HBDYW/AVA-Encoder](https://github.com/HBDYW/AVA-Encoder).** Consult the repository for the current availability of the evaluation toolkit, system prompts, data, and graph-editing tools.
 
 - [x] Paper overview and method description
 - [x] Reconstruction and editing visualizations
-- [ ] AVA-Encoder implementation — **Coming Soon**
-- [ ] Reconstruction evaluation toolkit — **Coming Soon**
-- [ ] System prompts and reproducibility instructions — **Coming Soon**
-- [ ] Film Knowledge Graph Dataset — **Coming Soon**
-- [ ] Graph-editing interface — **Coming Soon**
+- [x] [AVA-Encoder source code](https://github.com/HBDYW/AVA-Encoder)
+- Reconstruction benchmark and evaluation toolkit — see repository
+- Agentic Video Encoder system prompts — see repository and paper appendix
+- Film KG Dataset and graph-editing tools — see repository
 
 Please watch or star this repository to follow future releases.
 
@@ -178,7 +178,7 @@ If you find this project useful, please consider citing our paper:
 
 ## License
 
-Licenses for the code, evaluation toolkit, and Film Knowledge Graph Dataset will be provided with their respective releases. The current repository contains the project description and paper visualizations only.
+License information for the code and released resources is provided with the corresponding materials in the source repository.
 
 ## Contact
 

@@ -49,8 +49,8 @@
 
       <div class="paper-links">
         <a href="#paper">Paper <small>coming soon</small></a>
-        <a href="#release">Code <small>coming soon</small></a>
-        <a href="#dataset">Dataset <small>coming soon</small></a>
+        <a href="https://github.com/HBDYW/AVA-Encoder" target="_blank" rel="noreferrer">Code</a>
+        <a href="#dataset">Dataset <small>details</small></a>
         <button type="button" data-copy-target="bibtex-code">BibTeX</button>
       </div>
 
@@ -69,13 +69,13 @@
       <h2>Agentic Video Auto-Encoding</h2>
       <div class="abstract-text">
         <p>
-          Creative agents still lack an effective way to learn from high-quality human films, limiting their ability to produce cinematic-grade videos. A key challenge is the absence of a structured video representation that is both faithful to film content and directly usable for agentic reasoning and manipulation. To address the challenge, we propose the Agentic Video Auto-Encoder (AVA-Encoder), a framework for learning agent-native video representations via agentic auto-encoding.
+          Video creative agents still lack an effective way to learn from high-quality human films, limiting their ability to produce cinematic-grade videos. A key challenge is the absence of a structured video representation that is both faithful to film content and directly usable for agentic reasoning and manipulation. To address the challenge, we propose the Agentic Video Auto-Encoder (AVA-Encoder), a novel auto-encoding framework driven by agentic self-evolution to learn agent-native video representations.
         </p>
         <p>
-          AVA-Encoder transforms a video into a knowledge graph (KG) representation and then reconstructs it back into video. This KG representation explicitly captures entities, events, assets, and their multimodal relationships in a structured form that can be easily understood, queried, and manipulated by agents. The video reconstruction differences drive a textual-gradient optimization framework that jointly improves the KG representation quality and the agentic encoder.
+          AVA-Encoder transforms a video into a Film Knowledge Graph (KG) representation and then reconstructs it back into video. This Film KG representation explicitly captures entities, events, assets, and their multimodal relationships in a structured form that can be easily understood, queried, and manipulated by agents. The reconstruction residual drives a dual-loop textual-gradient optimization framework that jointly improves the Film KG representation and the Agentic Video Encoder.
         </p>
         <p>
-          Extensive experiments demonstrate that AVA-Encoder significantly outperforms human-tuned baseline systems, achieving an absolute improvement of 20.7 percentage points over the strongest baseline and surpassing extensively human-engineered system prompts while utilizing 3.9 times fewer system tokens. We release the complete AVA-Encoder framework, a reliable agentic video reconstruction benchmark, and the first dataset of high-quality film KG representations.
+          Extensive experiments show that AVA-Encoder achieves a 20.7-percentage-point absolute gain, or a 73.1% relative improvement, over the strongest external baseline. In the controlled policy-only setting, its pseudo-trained Agentic Video Encoder policy also outperforms a carefully human-tuned policy while using 74.3% fewer shot-level and 70.1% fewer keyframe-level system-prompt tokens. We release the complete AVA-Encoder framework, a reliable agentic video reconstruction benchmark, and the first dataset of high-quality Film KG representations.
         </p>
       </div>
     </section>
@@ -84,9 +84,9 @@
       <p class="section-label">Contributions</p>
       <h2>What this paper introduces</h2>
       <div class="contribution-grid">
-        <article><span>1</span><h3>Agentic Video Auto-Encoder</h3><p>A self-evolving auto-encoding formulation for learning agent-native video representations through reconstruction.</p></article>
-        <article><span>2</span><h3>Reconstruction benchmark</h3><p>Four evaluation directions and eight film dimensions for measuring representational faithfulness.</p></article>
-        <article><span>3</span><h3>Film KG data and editing</h3><p>Text-based Film KG representations and graph-topology editing for generation trajectories, remixing, and reuse.</p></article>
+        <article><span>1</span><h3>Agentic Video Auto-Encoder</h3><p>A self-evolving auto-encoding formulation whose two optimization stages improve Overall reconstruction by 6.6 points over removing both stages.</p></article>
+        <article><span>2</span><h3>Agentic video representation benchmark</h3><p>Four evaluation directions and eight fine-grained dimensions for measuring reconstruction faithfulness.</p></article>
+        <article><span>3</span><h3>Film KG dataset and editing framework</h3><p>High-quality Film KG representations and graph-based editing for creation trajectories, controllable editing, remixing, and reuse.</p></article>
       </div>
     </section>
 
@@ -96,20 +96,20 @@
       <p>
         Given an input film \(V\), the Agentic Video Encoder \(E\), governed by the complete policy
         \(P=(P_{\mathrm{film}},P_{\mathrm{shot}},P_{\mathrm{kf}})\), produces a Film KG \(G\).
-        A fixed text-to-image and image-to-video decoder then reconstructs \(\hat V\):
+        A fixed rendering pipeline that calls fixed generation models as tools then reconstructs \(\hat V\):
       </p>
       <div class="display-equation">\[G=E(V;P), \qquad \hat V=\mathrm{Dec}(G).\]</div>
       <p>
         With \(\mathrm{Dec}\) fixed, reconstruction quality measures how much film information is preserved
-        in \(G\). Reconstruction errors provide grounded evidence for improving the shared encoding policy
+        in \(G\). Reconstruction residuals provide grounded evidence for improving the shared encoding policy
         and the input-specific representation at separate stages.
       </p>
 
       <div class="method-list">
         <article><span>01</span><div><h3>Multi-level Agentic Video Encoder</h3><p>Film-, shot-, and keyframe-level understanding maps dense multimodal video into structured text, with each finer level receiving context from the preceding level.</p></div></article>
-        <article><span>02</span><div><h3>Film Knowledge-Graph Representation</h3><p>Typed relations preserve hierarchy, temporal order, asset references, and cross-shot dependencies after different modalities and semantic levels have been separated.</p></div></article>
-        <article><span>03</span><div><h3>Dual-loop Textual-Gradient Evolution</h3><p>Data-Independent Encoding Policy Pseudo-Training improves the shared shot-level policy; optional Data-Dependent KG Representation Refinement later improves only the current input's KG.</p></div></article>
-        <article><span>04</span><div><h3>Reconstruction Error</h3><p>The loop-facing \(R_{\mathrm{reward}}\) supports diagnosis and candidate acceptance, while the separate \(R_{\mathrm{eval}}\) provides common final evaluation across systems.</p></div></article>
+        <article><span>02</span><div><h3>Film KG Representation</h3><p>Typed relations preserve hierarchy, temporal order, asset references, and cross-shot dependencies after different modalities and semantic levels have been separated.</p></div></article>
+        <article><span>03</span><div><h3>Dual-loop Textual-Gradient Evolution</h3><p>Data-Agnostic Encoding Policy Pseudo-Training improves the shared shot- and keyframe-level policies; optional Data-Dependent KG Representation Refinement later improves only the current input's KG.</p></div></article>
+        <article><span>S</span><div><h3>Reconstruction Residual</h3><p>Branch-specific failures diagnose errors and construct textual gradients, \(R_{\mathrm{reward}}\) verifies candidates, and the separate \(R_{\mathrm{eval}}\) provides common final evaluation.</p></div></article>
       </div>
     </section>
 
@@ -121,14 +121,16 @@
         The Agentic Video Encoder first captures the global film context, then analyzes each shot with that context, and finally describes keyframe details with the corresponding shot context. This ordered injection reduces information loss when tightly coupled video content is mapped into structured text.
       </p>
       <div class="hierarchy-equation">\[
-        \mathcal C_{\mathrm{film}}=E_{\mathrm{film}}(V;P_{\mathrm{film}}),\qquad
-        \mathcal C_{\mathrm{shot},i}=E_{\mathrm{shot}}(s_i,\mathcal C_{\mathrm{film}};P_{\mathrm{shot}}),
+        (\mathcal C_{\mathrm{film}},\mathcal B_{\mathrm{reg}})=E_{\mathrm{film}}(V;P_{\mathrm{film}}),
       \]
       \[
-        \mathcal C_{\mathrm{kf},i}=E_{\mathrm{kf}}(f_i^*,\mathcal C_{\mathrm{shot},i};P_{\mathrm{kf}}).
+        \mathcal C_{\mathrm{shot},i}=E_{\mathrm{shot}}(s_i,\mathcal C_{\mathrm{film}},\mathcal B_{\mathrm{reg}};P_{\mathrm{shot}}),
+      \]
+      \[
+        \mathcal C_{\mathrm{kf},i,j}=E_{\mathrm{kf}}(f^{\mathrm{kf}}_{i,j},\mathcal C_{\mathrm{shot},i},\mathcal B_{\mathrm{reg}};P_{\mathrm{kf}}).
       \]</div>
       <p class="equation-explain">
-        Here \(s_i\) is shot \(i\), \(f_i^*\) is its selected keyframe, and \(\mathcal C_{\mathrm{film}}\), \(\mathcal C_{\mathrm{shot},i}\), and \(\mathcal C_{\mathrm{kf},i}\) are the film-, shot-, and keyframe-level contexts. The complete policy is \(P=(P_{\mathrm{film}},P_{\mathrm{shot}},P_{\mathrm{kf}})\).
+        Here \(s_i\) is shot \(i\), \(f^{\mathrm{kf}}_{i,j}\) is its \(j\)-th selected keyframe, and \(\mathcal B_{\mathrm{reg}}\) is the shared character, scene, and object registry. The complete policy is \(P=(P_{\mathrm{film}},P_{\mathrm{shot}},P_{\mathrm{kf}})\); film context and the complete registry condition both finer levels, and shot context additionally conditions each keyframe.
       </p>
     </section>
 
@@ -158,7 +160,7 @@
         <p class="section-subtitle">Stage-Separated Optimization of Policy and Representation</p>
         <p>
           The stages update different objects at different times and are not nested. First, the outer loop
-          learns the shared shot-level policy before deployment. After the complete policy is frozen, the
+          learns the shared shot- and keyframe-level policies before deployment. After the complete policy is frozen, the
           inner loop may optionally refine the current video's KG at test time. All foundation-model weights
           remain fixed, and \(P\) and \(G\) are never updated simultaneously.
         </p>
@@ -168,13 +170,13 @@
         <article>
           <p class="mini-label">Stage 1 · before deployment</p>
           <h3>Outer Loop</h3>
-          <p class="loop-subtitle">Data-Independent Encoding Policy Pseudo-Training</p>
-          <p class="objective-summary"><b>When:</b> before deployment &nbsp;·&nbsp; <b>Updates:</b> shared \(P_{\mathrm{shot}}\) &nbsp;·&nbsp; <b>Freezes:</b> \(P_{\mathrm{film}}\), \(P_{\mathrm{kf}}\), and all model weights</p>
+          <p class="loop-subtitle">Data-Agnostic Encoding Policy Pseudo-Training</p>
+          <p class="objective-summary"><b>When:</b> before deployment &nbsp;·&nbsp; <b>Updates:</b> shared \(P_{\mathrm{shot}}\) and \(P_{\mathrm{kf}}\) in separate branches &nbsp;·&nbsp; <b>Freezes:</b> \(P_{\mathrm{film}}\) and all model weights</p>
           <div class="compact-equation">\[
-            P_{\mathrm{shot}}^*=\arg\max_{p\in\mathcal P_{\mathrm{shot}}}
-            \frac{1}{L}\sum_{n=1}^{L}R_{\mathrm{reward},n}(p).
+            P^*=(P_{\mathrm{film}},P_{\mathrm{shot}}^*,P_{\mathrm{kf}}^*),
+            \qquad P_{\mathrm{film}}\ \text{fixed}.
           \]</div>
-          <p>The Outer Loop learns one reusable shot-level encoding policy from a stream of \(L\) videos---six in the reported pseudo-training setup. The resulting policy is shared by later, unseen video inputs.</p>
+          <p>The Outer Loop applies separate propose–verify–accept branches to learn reusable shot- and keyframe-level encoding prompts from a stream of \(L\) videos—six in the reported pseudo-training setup. The resulting complete policy is shared by later, unseen video inputs.</p>
         </article>
         <article>
           <p class="mini-label">Stage 2 · optional at test time</p>
@@ -193,9 +195,9 @@
         <figure>
           <p class="mini-label">Stage 1 · before deployment</p>
           <h3>Outer Loop</h3>
-          <p class="loop-subtitle">Data-Independent Encoding Policy Pseudo-Training</p>
+          <p class="loop-subtitle">Data-Agnostic Encoding Policy Pseudo-Training</p>
           <img src="assets/outer_loop.png" alt="Outer-loop policy pseudo-training with reconstruction feedback and an anti-forgetting gate.">
-          <figcaption><strong>Outer loop.</strong> Reconstruction feedback proposes a challenger \(P'\); current-video and historical replay checks determine whether it replaces the incumbent \(P_{\mathrm{shot}}\).</figcaption>
+          <figcaption><strong>Outer loop.</strong> Reconstruction feedback proposes a challenger \(P'\); current-video and historical replay checks determine whether it replaces the incumbent active \(P_{\mathrm{shot}}\) or \(P_{\mathrm{kf}}\) branch.</figcaption>
         </figure>
         <figure>
           <p class="mini-label">Stage 2 · optional at test time</p>
@@ -213,9 +215,9 @@
     </section>
 
     <section class="paper-section paper-width section-alt" id="reconstruction-error">
-      <p class="section-label">Component 4</p>
-      <h2>Reconstruction Error</h2>
-      <p class="section-subtitle">One signal for optimization, one protocol for reporting</p>
+      <p class="section-label">Signal design</p>
+      <h2>Reconstruction Residual</h2>
+      <p class="section-subtitle">Failure evidence for textual gradients, one reward for verification, and one protocol for reporting</p>
       <p>
         A complex image or video is difficult to judge with one direct score. AVA-Encoder therefore decomposes each selected keyframe or shot into approximately 30 atomic factual questions. Their answers provide precise reconstruction feedback for optimization, while a separate common protocol provides final comparison across representation systems.
       </p>
@@ -223,16 +225,16 @@
         <article>
           <p class="mini-label">Loop optimization · \(R_{\mathrm{reward}}\)</p>
           <div>\[
-            R_{\mathrm{reward},n,s}(P_{\mathrm{shot}})
-            =\frac{1}{K_{n,s}}\sum_{k=1}^{K_{n,s}}\chi_{n,s,k}(P_{\mathrm{shot}})
+            R_{\mathrm{reward},n,s}(P)
+            =\frac{1}{K_{n,s}}\sum_{k=1}^{K_{n,s}}\chi_{n,s,k}(P)
           \]</div>
-          <p>For shot \(s\) in video \(n\), \(\chi_{n,s,k}=1\) when reconstruction preserves atomic fact \(k\). This fact-level signal diagnoses errors and verifies candidate updates in both loops.</p>
+          <p>For shot \(s\) in video \(n\), \(\chi_{n,s,k}=1\) when reconstruction preserves atomic fact \(k\). Failed facts provide localized evidence for textual-gradient construction, while the scalar reward supports candidate verification and acceptance.</p>
         </article>
         <article>
           <p class="mini-label">Final reporting · \(R_{\mathrm{eval}}\)</p>
           <div>\[
             R_{\mathrm{eval}}(V,\hat V)
-            =\sum_{d=1}^{D}\omega_d^{\mathrm{eval}}(1-r_d^{\mathrm{eval}})
+            =\sum_{d=1}^{D_{\mathrm{app}}}\omega_d^{\mathrm{eval}}(1-r_d^{\mathrm{eval}})
           \]</div>
           <p>Here \(r_d^{\mathrm{eval}}\) is the normalized residual for applicable film dimension \(d\), and \(\sum_d\omega_d^{\mathrm{eval}}=1\). This protocol reports V, KF, V-BC, KF-BC, and Overall; it does not optimize either loop.</p>
         </article>
@@ -274,15 +276,15 @@
         <div class="best" style="--score:49"><span>Both stages</span><i></i><b>49.0</b></div>
       </div>
       <div class="controlled-findings">
-        <article><p class="mini-label">Policy evolution</p><b>45.8 &gt; 44.4</b><p>The pseudo-trained policy exceeds the human-tuned policy with the Inner Loop disabled in both conditions, while reducing system-prompt tokens from 31,336 to 8,052.</p></article>
+        <article><p class="mini-label">Policy evolution</p><b>45.8 &gt; 44.4</b><p>The pseudo-trained policy exceeds the human-tuned policy with the Inner Loop disabled in both conditions, while reducing shot-level prompt tokens from 31,336 to 8,052 and keyframe-level prompt tokens from 13,574 to 4,062.</p></article>
         <article><p class="mini-label">Acceptance gates</p><b>49.0 &gt; 43.5</b><p>The complete gated system improves Overall by 5.5 points over removing both acceptance gates.</p></article>
       </div>
       <div class="results-table-wrap ablation-results">
         <table class="ablation-table">
           <thead><tr><th>Ablation setting</th><th>V ↑</th><th>KF ↑</th><th>V-BC ↑</th><th>KF-BC ↑</th><th>Overall ↑</th></tr></thead>
           <tbody>
-            <tr><td>Single-level understanding</td><td>35.1</td><td>38.4</td><td>15.4</td><td>21.1</td><td>27.5</td></tr>
-            <tr><td>Remove Data-Independent Encoding Policy Pseudo-Training</td><td>52.7</td><td>71.8</td><td>23.9</td><td>33.1</td><td>45.4</td></tr>
+            <tr><td>Naive Agentic Video Encoder</td><td>35.1</td><td>38.4</td><td>15.4</td><td>21.1</td><td>27.5</td></tr>
+            <tr><td>Remove Data-Agnostic Encoding Policy Pseudo-Training</td><td>52.7</td><td>71.8</td><td>23.9</td><td>33.1</td><td>45.4</td></tr>
             <tr><td>Remove Data-Dependent KG Representation Refinement</td><td>55.6</td><td>68.3</td><td>26.6</td><td>32.7</td><td>45.8</td></tr>
             <tr><td>Remove both optimization loops</td><td>50.7</td><td>67.6</td><td>21.2</td><td>29.9</td><td>42.4</td></tr>
             <tr><td>Human-tuned Agentic Video Encoder</td><td>53.5</td><td>68.1</td><td>25.8</td><td>30.2</td><td>44.4</td></tr>
@@ -373,32 +375,34 @@
     </section>
 
     <section class="paper-section paper-width" id="dataset">
-      <p class="section-label">Film Knowledge Graph Dataset</p>
+      <p class="section-label">Film KG Dataset</p>
       <h2>Text-based Film KG representations at the scale of tens of thousands of shots</h2>
       <p>
-        The dataset contains fine-grained structured descriptions of scripts, events, characters,
-        scenes, objects, shots, keyframes, camera language, visual style, and audio, together with
-        their graph relations. The public release will contain structured text rather than source-film
-        pixels or generated multimedia assets. Users may connect their own generation APIs, use the
-        representations as agentic video creation trajectories, or perform graph-topology editing.
+        We construct and release Film KG representations derived from high-quality, human-made film
+        content at the scale of tens of thousands of shots. The dataset contains fine-grained structured
+        descriptions of scripts, characters, scenes, objects, shots, and keyframes. It includes only the
+        structured-text hierarchy, states, and relations—not source-film pixels or generated image, audio,
+        or video assets. Users can connect their own generation APIs, use the representations as agentic
+        video creation trajectories, or perform graph-topology editing.
       </p>
     </section>
 
     <section class="paper-section paper-width section-alt" id="release">
       <p class="section-label">Release</p>
-      <h2>Code coming soon</h2>
+      <h2>Source code</h2>
       <p>
-        We are preparing the AVA-Encoder implementation, reconstruction evaluation toolkit, complete
-        system prompts, data documentation, Film Knowledge Graph Dataset, and graph-editing interface
-        for public release in this repository.
+        The AVA-Encoder source code is available in the
+        <a href="https://github.com/HBDYW/AVA-Encoder" target="_blank" rel="noreferrer">official GitHub repository</a>.
+        The released project covers the complete framework described in the paper; consult the repository
+        for the current availability of the evaluation toolkit, system prompts, data, and graph-editing tools.
       </p>
       <ul class="release-list">
         <li class="ready">Project page and method overview</li>
         <li class="ready">Reconstruction and editing visualizations</li>
-        <li>AVA-Encoder implementation — coming soon</li>
-        <li>Evaluation toolkit and system prompts — coming soon</li>
-        <li>Film Knowledge Graph Dataset — coming soon</li>
-        <li>Graph-editing interface — coming soon</li>
+        <li class="ready"><a href="https://github.com/HBDYW/AVA-Encoder" target="_blank" rel="noreferrer">AVA-Encoder source code</a></li>
+        <li>Reconstruction benchmark and evaluation toolkit — see repository</li>
+        <li>Agentic Video Encoder system prompts — see repository and paper appendix</li>
+        <li>Film KG Dataset and graph-editing tools — see repository</li>
       </ul>
     </section>
 
